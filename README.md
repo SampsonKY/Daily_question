@@ -5,6 +5,7 @@
 ## JS 相关
 
 ## ES6 相关
+* [2020.9.27 根据Promise/A+规范写一个Promise](https://github.com/SampsonKY/Daily_question/issues/1)
 
 ## 算法相关
 
