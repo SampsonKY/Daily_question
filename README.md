@@ -6,11 +6,13 @@
 
 ## ES6 相关
 * [2020.9.27 根据Promise/A+规范写一个Promise](https://github.com/SampsonKY/Daily_question/issues/1)
+* [2020.9.28 Generator 自动执行](https://github.com/SampsonKY/Daily_question/issues/3)
 
 ## React 相关
 * [2020.9.27 为什么 reducer 是一个纯函数](https://github.com/SampsonKY/Daily_question/issues/2)
 
 ## 算法相关
+* [2020.9.28 树【前缀树】](https://github.com/SampsonKY/Daily_question/issues/3)
 
 ## 浏览器相关
 
