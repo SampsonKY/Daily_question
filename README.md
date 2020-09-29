@@ -3,6 +3,7 @@
 > 春招冲冲冲！！！
 
 ## JS 相关
+* [手撕 JavaScript 代码](https://github.com/SampsonKY/Daily_question/issues/6)
 
 ## ES6 相关
 * [2020.9.27 根据Promise/A+规范写一个Promise](https://github.com/SampsonKY/Daily_question/issues/1)
