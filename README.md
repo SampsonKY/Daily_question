@@ -13,6 +13,7 @@
 
 ## 算法相关
 * [2020.9.28 树【前缀树】](https://github.com/SampsonKY/Daily_question/issues/3)
+* [2020.9.29 树【二叉搜索树篇】](https://github.com/SampsonKY/Daily_question/issues/5)
 
 ## 浏览器相关
 
