@@ -4,6 +4,7 @@
 
 ## JS 相关
 * [手撕 JavaScript 代码](https://github.com/SampsonKY/Daily_question/issues/6)
+* [JS中 `==`、`===`、`Object.is()` 的区别](https://github.com/SampsonKY/Daily_question/issues/13)
 
 ## ES6 相关
 * [2020.9.27 根据Promise/A+规范写一个Promise](https://github.com/SampsonKY/Daily_question/issues/1)
@@ -19,7 +20,10 @@
 * [算法【动态规划篇】](https://github.com/SampsonKY/Daily_question/issues/8)
 
 ## 浏览器相关
+* [浏览器常用存储技术](https://github.com/SampsonKY/Daily_question/issues/11)
+* [浏览器什么时候发生回流和重绘](https://github.com/SampsonKY/Daily_question/issues/12)
+* [XSS 攻击](https://github.com/SampsonKY/Daily_question/issues/9)
 
 ## 网络相关
-
+* [什么是二层转发和三层路由](https://github.com/SampsonKY/Daily_question/issues/10)
 
