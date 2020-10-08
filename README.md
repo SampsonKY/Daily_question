@@ -23,6 +23,7 @@
 * [浏览器常用存储技术](https://github.com/SampsonKY/Daily_question/issues/11)
 * [浏览器什么时候发生回流和重绘](https://github.com/SampsonKY/Daily_question/issues/12)
 * [XSS 攻击](https://github.com/SampsonKY/Daily_question/issues/9)
+* [浏览器安全](https://github.com/SampsonKY/Daily_question/issues/14)
 
 ## 网络相关
 * [什么是二层转发和三层路由](https://github.com/SampsonKY/Daily_question/issues/10)
