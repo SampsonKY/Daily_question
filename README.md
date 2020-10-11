@@ -25,6 +25,7 @@
 ## 浏览器相关
 * [宏观视角下的浏览器](https://github.com/SampsonKY/Daily_question/issues/15)
 * [V8 工作原理](https://github.com/SampsonKY/Daily_question/issues/19)
+* [浏览器中的页面](https://github.com/SampsonKY/Daily_question/issues/20)
 * [浏览器安全](https://github.com/SampsonKY/Daily_question/issues/14)
 * [浏览器常用存储技术](https://github.com/SampsonKY/Daily_question/issues/11)
 * [浏览器什么时候发生回流和重绘](https://github.com/SampsonKY/Daily_question/issues/12)
