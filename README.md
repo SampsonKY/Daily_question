@@ -4,6 +4,7 @@
 
 ## JS 相关
 * [手撕 JavaScript 代码](https://github.com/SampsonKY/Daily_question/issues/6)
+* [深浅拷贝](https://github.com/SampsonKY/Daily_question/issues/21)
 * [JS中 `==`、`===`、`Object.is()` 的区别](https://github.com/SampsonKY/Daily_question/issues/13)
 * [JavaScript 执行机制](https://github.com/SampsonKY/Daily_question/issues/16)
 * [从执行上下文学习闭包](https://github.com/SampsonKY/Daily_question/issues/17)
