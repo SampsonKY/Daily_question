@@ -15,6 +15,9 @@
 * [2020.9.28 Generator 自动执行](https://github.com/SampsonKY/Daily_question/issues/3)
 
 ## React 相关
+**React核心原理**
+* [JSX 原理](https://github.com/SampsonKY/Daily_question/issues/23)
+**Redux**
 * [2020.9.27 为什么 reducer 是一个纯函数](https://github.com/SampsonKY/Daily_question/issues/2)
 
 ## 算法相关
