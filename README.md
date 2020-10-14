@@ -11,19 +11,21 @@
 * [从执行上下文学习 this](https://github.com/SampsonKY/Daily_question/issues/18)
 
 ## ES6 相关
-* [2020.9.27 根据Promise/A+规范写一个Promise](https://github.com/SampsonKY/Daily_question/issues/1)
-* [2020.9.28 Generator 自动执行](https://github.com/SampsonKY/Daily_question/issues/3)
+* [根据Promise/A+规范写一个Promise](https://github.com/SampsonKY/Daily_question/issues/1)
+* [Generator 自动执行](https://github.com/SampsonKY/Daily_question/issues/3)
 
 ## React 相关
 **React核心原理**
 * [JSX 原理](https://github.com/SampsonKY/Daily_question/issues/23)
+* [React Fiber 架构](https://github.com/SampsonKY/Daily_question/issues/24)
+
 **Redux**
 * [2020.9.27 为什么 reducer 是一个纯函数](https://github.com/SampsonKY/Daily_question/issues/2)
 
 ## 算法相关
-* [2020.9.28 树【前缀树】](https://github.com/SampsonKY/Daily_question/issues/3)
-* [2020.9.29 树【二叉搜索树篇】](https://github.com/SampsonKY/Daily_question/issues/5)
-* [2020.10.1 算法【二分搜索篇】](https://github.com/SampsonKY/Daily_question/issues/7)
+* [树【前缀树】](https://github.com/SampsonKY/Daily_question/issues/3)
+* [树【二叉搜索树篇】](https://github.com/SampsonKY/Daily_question/issues/5)
+* [算法【二分搜索篇】](https://github.com/SampsonKY/Daily_question/issues/7)
 * [算法【动态规划篇】](https://github.com/SampsonKY/Daily_question/issues/8)
 
 ## 浏览器相关
