@@ -18,8 +18,10 @@
 **React核心原理**
 * [JSX 原理](https://github.com/SampsonKY/Daily_question/issues/23)
 * [React Fiber 架构](https://github.com/SampsonKY/Daily_question/issues/24)
+* [Diff 算法原理](https://github.com/SampsonKY/Daily_question/issues/25)
 
 **Redux**
+
 * [2020.9.27 为什么 reducer 是一个纯函数](https://github.com/SampsonKY/Daily_question/issues/2)
 
 ## 算法相关
