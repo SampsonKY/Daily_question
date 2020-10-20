@@ -66,11 +66,11 @@ switch (window.location.hash) {
 
 `react-router`最主要的`API`是给我们提供的一些**「组件」**
 
-- `BrowserRouter`或`HashRouter`组件
+- `BrowserRouter`或`HashRouter`组件【**路由器**】
   - `Router`中包含了对路径改变的监听, 并且会将相应的路径传递给子组件
   - `BrowserRouter`使用了`history`模式
   - `HasRouter`使用了`hash`模式
-- `Link`组件和`NavLink`组件
+- `Link`组件和`NavLink`组件【**在应用程序中创建链接**】
   - 通常路径的跳转时是使用`Link`, 最终会被渲染成`a`元素
   - `NavLink`是在`Link`基础之上增加了一些样式属性(后续学习)
   - `to`属性: `link`组件中最重要的属性, 用于设置跳转到的路径
