@@ -24,6 +24,9 @@
 
 * [2020.9.27 为什么 reducer 是一个纯函数](https://github.com/SampsonKY/Daily_question/issues/2)
 
+**Router**
+* [react-router-config基本使用](https://github.com/SampsonKY/Daily_question/issues/26)
+
 ## 算法相关
 * [树【前缀树】](https://github.com/SampsonKY/Daily_question/issues/3)
 * [树【二叉搜索树篇】](https://github.com/SampsonKY/Daily_question/issues/5)
