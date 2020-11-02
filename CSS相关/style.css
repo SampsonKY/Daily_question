@@ -1,0 +1,19 @@
+#triangle{
+    height: 0;
+    width: 0;
+    border-width: 20px;
+    border-style: solid;
+    border-color: black yellow red greenyellow;
+}
+
+ul{
+    width: 100px;
+    height: 100px;
+    background: #000;
+}
+
+ul>li{
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
