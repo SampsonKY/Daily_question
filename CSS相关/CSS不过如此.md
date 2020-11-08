@@ -358,7 +358,9 @@ clear 属性只有块级元素才有效的，而::after 等伪元素默认都是
 - 属性为0时，不加单位。属性值为浮动小数 0.xx，可以省略小数点前的0
 - 不使用 @import 属性，它会影响 css 的加载速度。
 - 选择器优化嵌套，避免层级过深
-- CSS 雪碧图
+- CSS 雪碧图：将一个页面涉及到的所有图片都包含到一张大图中去，然后利用CSS 的background-image，background-repeat，background-position 的组合进行背景定位。利用CSSSprites 能很好地减少网页的http 请求，从而很好的提高页面的性能；CSSSprites能减少图片的字节。
+  - 优点：①减少HTTP请求数，极大地提高页面加载速度②增加图片信息重复度，提高压缩比，减少图片大小③更换风格方便，只需要在一张或几张图片上修改颜色或样式即可实现
+  - 缺点：图片合并麻烦；维护麻烦，修改一个图片可能需要重新布局整个图片，样式
 - 不滥用 web 字体
 
 **可维护性、可健壮性**
@@ -390,6 +392,94 @@ clear 属性只有块级元素才有效的，而::after 等伪元素默认都是
 
 多数显示器默认频率是60Hz，即1 秒刷新60 次，所以理论上最小间隔为1/60*1000ms＝
 16.7ms。
+
+### 35. layoutviewport、visualviewport 和 idealviewport的区别
+
+- 第一个视口是布局视口，在移动端显示网页时，由于移动端的屏幕尺寸比较小，如果网页使用移动端的屏幕尺寸进行布局的话，那么整个页面的布局都会显示错乱。所以移动端浏览器提供了一个layoutviewport 布局视口的概念，使用这个视口来对页面进行布局展示，一般layoutviewport 的大小为980px，因此页面布局不会有太大的变化，我们可以通过拖动和缩放来查看到这个页面。
+- 第二个视口指的是视觉视口，visualviewport 指的是移动设备上我们可见的区域的视口大小，一般为屏幕的分辨率的大小。
+- 第三个视口是理想视口，由于layoutviewport 一般比visualviewport 要大，所以想要看到整个页面必须通过拖动和缩放才能实现。所以又提出了idealviewport 的概念idealviewport 下用户不用缩放和滚动条就能够查看到整个页面，并且页面在不同分辨率下显示的内容大小相同。idealviewport 其实就是通过修改layoutviewport 的大小，让它等于设备的宽度，这个宽度可以理解为是设备独立像素，因此根据idealviewport 设计的页面，在不同分辨率的屏幕下，显示应该相同。
+
+### 36. position:fixed; 在 android 下无效怎么处理？
+
+因为移动端浏览器默认的viewport 叫做layoutviewport。在移动端显示时，因为layoutviewport的宽度大于移动端屏幕的宽度，所以页面会出现滚动条左右移动，fixed 的元素是相对layoutviewport 来固定位置的，而不是移动端屏幕来固定位置的，所以会出现感觉fixed 无效的情况。
+
+如果想实现fixed 相对于屏幕的固定效果，我们需要改变的是viewport 的大小idealviewport，可以如下设置：
+
+```html
+<metaname="viewport"content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+```
+
+### 37. 如何去除 inline-block 元素间间距
+
+移除空格、使用margin 负值、使用font-size:0、letter-spacing、word-spacing
+
+### 38. 有一个高度自适应的 div，里面有两个 div，一个高度100px，希望另一个填满剩下的高度
+
+- 外层div使用`position: relative;` 高度要求自适应的div使用`position:absolute;top:100px;bottom:0;left:0;right:0`
+- 使用flex布局，设置主轴为竖轴，第二个div的flex-grow为1
+
+### 39. CSS 预处理器/后处理器
+
+- CSS 预处理器定义了一种新的语言，其基本思想是，用一种专门的编程语言，为CSS 增加了一些编程的特性，将CSS 作为目标生成文件，然后开发者就只要使用这种语言进行编码工作。
+- CSS预处理器有：LESS，Sass等。
+- CSS后处理器是对CSS进行处理，并最终生成CSS预处理器，它属于广义上的CSS预处理器
+- 后处理器例如：PostCSS，通常被视为在完成的样式中根据CSS规范处理CSS，让其更有效；目前最常做的是给CSS属性添加浏览器私有前缀，实现浏览器兼容性的问题。
+
+### 40. 画一条0.5px的线
+
+[参考](https://juejin.im/post/6844903582370643975)
+
+### 41. 常见的元素隐藏方式？
+
+- `display:none`，隐藏元素，渲染树不会包含该渲染对象，因此该元素不会在页面中占据位置，也不会影响绑定的兼听事件
+- `visibility: hidden`，隐藏元素，元素在页面中仍占据空间，但不会响应绑定的监听事件
+- `opacity:0`，将元素的透明度设置为0，以此隐藏元素。元素在页面中仍占据空间，并能响应元素绑定的监听事件
+- 通过绝对定位将元素移除可视区域内。
+- 通过`z-index`负值来使其他元素遮住该元素
+- 通过`transform:scale(0,0)`来将元素缩放为0，以此来实现元素隐藏，该方法下元素在页面中占据位置，但不会影响绑定的监听事件。
+
+### 42.  单行/多行文本溢出的省略(…)？
+
+```css
+//单行文本溢出
+p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+}
+//多行文本溢出
+p{
+    position: relative;
+    line-height: 1.5em;
+    height: 3em;
+    overflow:hidden;
+}
+p:after{
+    content: '...';
+    position: absolute;
+    bottom:0;right:0;
+    background-color: #fff;
+}
+```
+
+### 43. overflow 的特殊性
+
+- 一个设置了 `overflow: hidden` 声明的元素，假设同时存在 `border` 和 `padding` 属性，则当子元素内容超出容器宽度高度限制的时候，裁剪的边界是 borderbox 的内边缘，而非 paddingbox 的内边缘
+- HTML中有两个标签默认可以产生滚动条，一个是根元素`<html>`，另一个是文本域`<textarea>`
+- 滚动条会占用容器的可用宽度或高度
+- 元素设置了 `overflow:hidden` 声明，里面内容高度溢出的时候，滚动依然存在，仅仅滚动条不存在
+
+### 44. 一些典型布局
+
+#### 1.  如何实现上下固定，中间自适应
+
+#### 2. CSS 两栏布局的实现
+
+#### 3. 实现一个宽高自适应的正方形
+
+#### 4. 实现一个三角形
+
+#### 5. 一个自适应矩形，水平垂直居中，且宽高比为 2:1
 
 
 
