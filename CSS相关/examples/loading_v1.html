@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loding_v1</title>
+    <style>
+        .spinner{
+            height: 50px;
+            width: 50px;
+            margin: 100px auto;
+            text-align: center;
+            font-size: 10px;
+        }
+        .spinner>div{
+            display: inline-block;
+            background-color: rgb(43,128,226);
+            height: 100%;
+            width: 5px;
+            margin-right: 1px;
+            animation: bytedance 1s infinite;
+        }
+        .spinner>div:nth-child(2){
+            background-color: rgb(49,84,124);
+            animation-delay: -0.9s;
+        }
+        .spinner>div:nth-child(3){
+            background-color: rgb(88, 128, 173);
+            animation-delay: -0.8s;
+        }
+        .spinner>div:nth-child(4){
+            background-color: rgb(88, 128, 173);
+            animation-delay: -0.7s;
+        }
+        .spinner>div:nth-child(5){
+            background-color: rgb(142, 187, 240);
+            animation-delay: -0.6s;
+        }
+
+        @keyframes bytedance {
+            0%, 40%, 100%{
+                transform: scaleY(0.4);
+            }
+            20%{
+                transform: scaleY(1);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+</html>

@@ -65,7 +65,7 @@
   - `animation-name`需要绑定到选择器的 keyframe 名称
   - `animation-duration`规定完成动画所花费的时间，以秒或毫秒计。
   - `animation-timing-function`规定动画速度曲线
-  - `animation-delay`规定动画开始前的延迟
+  - `animation-delay`规定动画开始前的延迟，若delay为负数，则动画会立即开始执行，开始的位置是动画的其中一个阶段。
   - `animation-iteration-count`规定动画播放次数，n|infinite
   - `animation-direction`规定是否应该轮流反向播放动画，normal|alternate
 
@@ -79,4 +79,131 @@
   | forwards  | 当动画完成后，保持最后一个属性值（在最后一个关键帧中定义）。 |
   | backwards | 在 animation-delay 所指定的一段时间内，在动画显示之前，应用开始属性值（在第一个关键帧中定义）。 |
   | both      | 向前和向后填充模式都被应用。                                 |
+
+## 小挑战
+
+### 1. 跳动的字节 loading…
+
+![img](https://user-gold-cdn.xitu.io/2019/7/25/16c275f1061d7b4a?imageslim)
+
+
+
+**思路：**直接用`animation-delay`控制5个元素的错落感。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loding_v1</title>
+    <style>
+        .spinner{
+            height: 50px;
+            width: 50px;
+            margin: 100px auto;
+            text-align: center;
+            font-size: 10px;
+        }
+        .spinner>div{
+            display: inline-block;
+            background-color: rgb(43,128,226);
+            height: 100%;
+            width: 5px;
+            margin-right: 1px;
+            animation: bytedance 1s infinite;
+        }
+        .spinner>div:nth-child(2){
+            background-color: rgb(49,84,124);
+            animation-delay: -0.9s;
+        }
+        .spinner>div:nth-child(3){
+            background-color: rgb(88, 128, 173);
+            animation-delay: -0.8s;
+        }
+        .spinner>div:nth-child(4){
+            background-color: rgb(88, 128, 173);
+            animation-delay: -0.7s;
+        }
+        .spinner>div:nth-child(5){
+            background-color: rgb(142, 187, 240);
+            animation-delay: -0.6s;
+        }
+
+        @keyframes bytedance {
+            0%, 40%, 100%{
+                transform: scaleY(0.4);
+            }
+            20%{
+                transform: scaleY(1);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+</html>
+```
+
+### 2. 涟漪缓动效果
+
+![img](https://user-gold-cdn.xitu.io/2019/7/25/16c2787c82fee2e8?imageslim)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loding_v2</title>
+    <style>
+        .spinner{
+            width: 60px;
+            height: 60px;
+            position: relative;
+            margin: 100px auto;
+        }
+    
+        .spinner > div{
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+            border-radius: 50%;
+            background-color: lightblue;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: loading 1.4s infinite ease-in;
+        }
+        
+        .spinner > div:nth-child(2){
+            animation-delay: -0.7s;
+        }
+        
+        @keyframes loading{
+            0%, 100% {
+                transform: scale(0.0);
+            }
+            50% {
+                transform: scale(1.0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="spinner">
+        <div></div>
+        <div></div>
+    </div>
+</body>
+</html>
+```
 
