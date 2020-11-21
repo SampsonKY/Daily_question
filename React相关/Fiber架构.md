@@ -122,12 +122,14 @@ Reconciler 内部采用了 **Fiber** 的结构。
 ## Fiber
 
 > Fiber 架构的心智模型：参考[Fiber 架构的心智模型]([https://react.iamkasong.com/process/fiber-mental.html#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BB%A3%E6%95%B0%E6%95%88%E5%BA%94](https://react.iamkasong.com/process/fiber-mental.html#什么是代数效应))、[代数效应入门](https://juejin.im/post/6844903976299675662)
+>
+> Fiber 架构的**应用目的**，按照 React 官方的说法，是实现“**增量渲染**”。所谓“增量渲染”，通俗来说就是把一个渲染任务分解为多个渲染任务，而后将其分散到多个帧里面。不过严格来说，增量渲染其实也只是一种手段，实现增量渲染的目的，是为了实现任务的可中断、可恢复，并给不同的任务赋予不同的优先级，最终达成更加顺滑的用户体验。
 
 ### Fiber 的含义
 
 `Fiber`包含三层含义：
 
-1. 作为架构来说，之前`React15`的`Reconciler`采用递归的方式执行，数据保存在递归调用栈中，所以被称为`stack Reconciler`。`React16`的`Reconciler`基于`Fiber节点`实现，被称为`Fiber Reconciler`。
+1. 作为**架构**来说，之前`React15`的`Reconciler`采用递归的方式执行，数据保存在递归调用栈中，所以被称为`stack Reconciler`。`React16`的`Reconciler`基于`Fiber节点`实现，被称为`Fiber Reconciler`。
 
    每个Fiber节点有个对应的`React element`，多个`Fiber节点`通过如下三个属性连接成树。
 
@@ -140,7 +142,7 @@ Reconciler 内部采用了 **Fiber** 的结构。
    this.sibling = null;
    ```
 
-2. 作为静态的数据结构来说，每个`Fiber节点`对应一个`React element`，保存了该组件的类型（函数组件/类组件/原生组件...）、对应的DOM节点等信息。
+2. 作为**静态的数据结构**来说，每个`Fiber节点`对应一个`React element`，保存了该组件的类型（函数组件/类组件/原生组件...）、对应的DOM节点等信息。
 
    ```javascript
    // Fiber对应组件的类型 Function/Class/Host...
@@ -155,7 +157,7 @@ Reconciler 内部采用了 **Fiber** 的结构。
    this.stateNode = null;
    ```
 
-3. 作为动态的工作单元来说，每个`Fiber节点`保存了本次更新中该组件改变的状态、要执行的工作（需要被删除/被插入页面中/被更新...）
+3. 作为**动态的工作单元**来说，每个`Fiber节点`保存了本次更新中该组件改变的状态、要执行的工作（需要被删除/被插入页面中/被更新...）
 
    ```javascript
    // 保存本次更新造成的状态改变相关信息
@@ -182,6 +184,8 @@ Reconciler 内部采用了 **Fiber** 的结构。
 this.lanes = NoLanes;
 this.childLanes = NoLanes;
 ```
+
+**总结**：从架构角度来看，Fiber 是对 React 核心算法（即调和过程）的重写；从编码角度来看，Fiber 是 React 内部所定义的一种数据结构，它是 Fiber 树结构的节点单位，也就是 React 16 新架构下的“虚拟 DOM”；从工作流的角度来看，Fiber 节点保存了组件需要更新的状态和副作用，一个 Fiber 同时也对应着一个工作单元。
 
 ### Fiber 工作原理
 

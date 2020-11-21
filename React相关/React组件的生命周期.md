@@ -15,7 +15,7 @@
 
 组件的更新分为两种：一种是由父组件更新触发的更新；另一种是组件自身调用自己的 setState 触发的更新。
 
-* **componentReceiveProps** 并不是由 props 的变化触发的，而是由父组件的更新触发的。**如果父组件导致组件重新渲染，即使props没有更改，也会调用此方法。如果只想处理更改，请确保进行当前值与变更值的比较。**
+* **componentWillReceiveProps** 并不是由 props 的变化触发的，而是由父组件的更新触发的。**如果父组件导致组件重新渲染，即使props没有更改，也会调用此方法。如果只想处理更改，请确保进行当前值与变更值的比较。**
 
   ```js
   componentWillReceiveProps(nextProps)
@@ -194,4 +194,6 @@ Fiber 架构的重要特征就是**可以被打断的**异步渲染模式。但�
 
 
 **看到一篇写的比较好的文章**：[深入 React 生命周期 ](https://github.com/sisterAn/blog/issues/34)
+
+推荐一篇文章**从源码角度分析为什么舍弃componentWillxxx**：[深入源码剖析componentWillXXX为什么UNSAFE](https://juejin.cn/post/6847902224287285255)
 

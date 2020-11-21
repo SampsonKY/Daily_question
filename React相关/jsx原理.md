@@ -12,7 +12,7 @@
 
 **JSX 语法如何在 JavaScript 中生效的？**
 
-* JSX 被 Babel 编译后，会变成一个针对 React.createElement() 的调用，React.createElement() 将返回一个叫做 React Element 的 JS对象。【这也是为什么在React中使用JSX语法，需要引入React】
+* **JSX 被 Babel 编译后，会变成一个针对 React.createElement() 的调用，React.createElement() 将返回一个叫做 React Element 的 JS对象。**【这也是为什么在React中使用JSX语法，需要引入React】
 
 * > 官网定义：Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中。
 
