@@ -190,6 +190,8 @@ module.exports = Promise
 promises-aplus-tests promise.js
 ```
 
+
+
 ## 参考
 
 [面试官：“你能手写一个 Promise 吗”](https://juejin.im/post/6850037281206566919#heading-17)
