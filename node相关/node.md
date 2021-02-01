@@ -1,4 +1,4 @@
-前置浏览器知识
+# 前置浏览器知识
 
 ## 浏览器内核（渲染引擎）介绍
 
@@ -966,7 +966,7 @@ app.listen(3000)
   const Koa = require('koa')
   const app = new Koa()
   
-  app.use( async ( ctx ) => {
+  app.use(async ( ctx ) => {
     ctx.body = 'hello world'
   })
   

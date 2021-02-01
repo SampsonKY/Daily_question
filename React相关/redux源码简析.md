@@ -80,14 +80,14 @@ function subscribe (listener) {
   nextListeners.push (listener)
   // 返回的是一个退订的方法，将特定的 listener 从订阅者集合中删除
   return function unsubscribe () {
-    // 已经退订了就不管了
+    // 用于防止多次调用 unsubscribe
     if (!isSubscribed) return;
     if (isDispatching) throw new Error ("xxx 具体信息省略")
 
     isSubscribed = false
     ensureCanMutateNextListeners ()
-    const index = nextListeners.indexOf (listener)
-    nextListeners.splice (index, 1)
+    const index = nextListeners.indexOf(listener)
+    nextListeners.splice(index, 1)
   }
 }
 ```
@@ -107,16 +107,16 @@ function dispatch (action) {
 
   try {
     isDispatching = true
-    // 看到没有？执行 reducer 后返回的状态直接成为 currentState 了
-    currentState = currentReducer (currentState, action)
+    // 调用 reducer，计算新的 state
+    currentState = currentReducer(currentState, action)
   } finally {
     isDispatching = false
   }
-
+  //触发订阅
   const listeners = (currentListeners = nextListeners)
   for (let i = 0; i < listeners.length; i++) {
-    const listener = listeners [i]
-    listener ()
+    const listener = listeners[i]
+    listener()
   }
 
   return action
@@ -138,6 +138,14 @@ function replaceReducer (nextReducer) {
 }
 ```
 
+### 初始化
+
+```js
+ // 初始化 state，当派发一个 type 为 ActionTypes.INIT 的 action，每个 reducer 都会返回
+    // 它的初始值
+    dispatch({ type: ActionTypes.INIT });
+```
+
 ## combineReducer
 
 combineReducer 用来组织不同模块的 reducer，那背后是怎么组织起来的呢？除去容错性的代码，我们看看 combineReducer 的核心源代码:
@@ -145,15 +153,15 @@ combineReducer 用来组织不同模块的 reducer，那背后是怎么组织起
 ```js
 export default function combineReducers (reducers) {
   // 以项目中的例子来讲，reducerKeys 就是 ['recommend', 'singers']
-  const reducerKeys = Object.keys (reducers)
+  const reducerKeys = Object.keys(reducers)
   //finalReducers 是 reducers 过滤后的结果
   // 确保 finalReducers 里面每一个键对应的值都是函数
   const finalReducers = {}
   for (let i = 0; i < reducerKeys.length; i++) {
-    const key = reducerKeys [i]
+    const key = reducerKeys[i]
 
-    if (typeof reducers [key] === 'function') {
-      finalReducers [key] = reducers [key]
+    if (typeof reducers[key] === 'function') {
+      finalReducers[key] = reducers[key]
     }
   }
   const finalReducerKeys = Object.keys (finalReducers)
@@ -164,13 +172,13 @@ export default function combineReducers (reducers) {
     let hasChanged = false
     const nextState = {}
     for (let i = 0; i < finalReducerKeys.length; i++) {
-      const key = finalReducerKeys [i]
-      const reducer = finalReducers [key]
+      const key = finalReducerKeys[i]
+      const reducer = finalReducers[key]
       // 原来的状态树中 key 对应的值
-      const previousStateForKey = state [key]
+      const previousStateForKey = state[key]
       // 调用 reducer 函数，获得该 key 值对应的新状态
-      const nextStateForKey = reducer (previousStateForKey, action)
-      nextState [key] = nextStateForKey
+      const nextStateForKey = reducer(previousStateForKey, action)
+      nextState[key] = nextStateForKey
       hasChanged = hasChanged || nextStateForKey !== previousStateForKey
     }
     // 这个很简单理解吧？如果没改变直接把原始的 state 返回即可
@@ -193,7 +201,7 @@ export default function compose (...funcs) {
     return funcs [0]
   }
 
-  return funcs.reduce ((a, b) => (...args) => a (b (...args)))
+  return funcs.reduce((a, b) => (...args) => a (b (...args)))
 }
 ```
 
@@ -233,24 +241,29 @@ export default thunk;
 
 ```js
 export default function applyMiddleware (...middlewares) {
+  //返回值是一个接收 createStore 为入参的函数
   return createStore => (...args) => {
+    //首先调用createStore创建一个store
     const store = createStore (...args)
     let dispatch = () => {
+      //为了避免在接下来中间件链的串联过程中，dispatch被调用
       throw new Error (
         'Dispatching while constructing your middleware is not allowed. ' +
           'Other middleware would not be applied to this dispatch.'
       )
     }
-    //middlewareAPI 其实就是拿到 store 的信息
+    //middlewareAPI是中间件的入参，其实就是拿到 store 的信息
     const middlewareAPI = {
       getState: store.getState,
-      dispatch: (...args) => dispatch (...args)
+      dispatch: (...args) => dispatch(...args)
     }
     // 参考上面的 thunk，其实就是传入 store 参数，剩下的部分为 next => action => { ... };
     // 传入这个参数是必须的，因为需要拿到 store 的相关属性，如 thunk 拿了 getState
     // 这里的意思就是每个中间件都能拿到 store 的数据
-    const chain = middlewares.map (middleware => middleware (middlewareAPI))
-    dispatch = compose (...chain)(store.dispatch)
+   	//遍历中间件数组，调用每个中间件，并且传入middlewareAPI作为入参，得到目标函数数组 chain
+    const chain = middlewares.map(middleware => middleware(middlewareAPI))
+    //改写原有的dispatch
+    dispatch = compose(...chain)(store.dispatch)
 
     return {
       ...store,
@@ -292,7 +305,7 @@ export default function createStore (reducer, preloadedState, enhancer) {
 如果要用 thunk 中间件，那么 redux 官方文档是这么写的:
 
 ```js
-const store = createStore (reducer, applyMiddleware (thunk));
+const store = createStore(reducer, applyMiddleware (thunk));
 ```
 
 看到没？这个时候其实 redux 内部的 enhancer 就变成了 applyMiddleware (thunk) 的结果。
@@ -307,7 +320,7 @@ const store = createStore (reducer, applyMiddleware (thunk));
 function createMyMiddleware (...arg) {
   return ({ dispatch, getState }) => next => action => {
     console.log ("我开发的 Redux 中间件")
-    return next (action);
+    return next(action);
   }
 }
 

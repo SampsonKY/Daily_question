@@ -237,11 +237,7 @@ console.log(this.props.location)
 
   - 使用: `react-router-config`来完成
 
-- 安装
-
-  ```jsx
-  react-router-config
-  ```
+- 安装`react-router-config`
 
   - `yarn add react-router-config`
   - 配置路由映射关系数组

@@ -132,6 +132,18 @@ export default React.memo(MyComponent, areEqual);
 - 此方法仅作为**性能优化**的方式而存在。但请不要依赖它来“阻止”渲染，这会产生 bug。
 - 与 class 组件中 `shouldComponentUpdate()` 方法不同的是，如果 props 相等，`areEqual`会返回 `true`；如果 props 不相等，则返回 `false`。这与 `shouldComponentUpdate` 方法的返回值相反。
 
+## useMemo
+
+> React.memo 控制是否需要重渲染一个组件，而 useMemo 控制的则是是否需要重复执行某一段逻辑。
+
+使用示例：
+
+```js
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+```
+
+我们可以把目标逻辑作为第一个参数传入，把逻辑的依赖项数组作为第二个参数传入。这样只有当依赖项数组中的某个依赖发生变化时，useMemo 才会重新执行第一个入参中的目标逻辑。
+
 ## 参考
 
 - [React 源码漂流（三）之 PureComponent](https://juejin.im/post/6844903907664068622)

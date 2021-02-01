@@ -3,7 +3,7 @@
 > It provides a third-party extension point between dispatching an
 > action, and the moment it reaches the reducer.
 
-这是 redux 作者 Dan 对 middleware 的描述，middleware 提供了一个分类处理 action 的机会，在 middleware 中你可以检阅每一个流过的 action，挑选出特定类型的 action 进行相应操作，给你一次改变 action 的机会。
+这是 redux 作者 Dan 对 middleware 的描述，middleware 在action被分发之后、reducer触发之前提供了一个第三方扩展点。
 
 ## 为什么 dispatch 需要 middleware
 
@@ -13,13 +13,9 @@
 
 面对多种多样的业务需求，单纯的修改 dispatch 或 reducer 的代码显然不具有普世性，我们需要的是可以组合的，自由插拔的插件机制，这一点 redux 借鉴了 [koa](https://link.zhihu.com/?target=http%3A//koa.bootcss.com/) 里中间件的思想，koa 是用于构建 web 应用的 NodeJS 框架。另外 reducer 更关心的是数据的转化逻辑，所以 redux 的 middleware 是为了增强 dispatch 而出现的。
 
-
-
 ![img](https://pic3.zhimg.com/80/9c456d5d211602e9d742262c2bf45762_720w.png)
 
 上面这张图展示了应用 middleware 后 redux 处理事件的逻辑，每一个 middleware 处理一个相对独立的业务需求，通过串联不同的 middleware，实现变化多样的的功能。那么问题来了：
-
-
 
 1. middleware 怎么写？
 2. redux 是如何让 middlewares 串联并跑起来的？
@@ -36,7 +32,7 @@ redux 提供了 applyMiddleware 这个 api 来加载 middleware，为了方便�
 
 **Step. 1 函数式编程思想设计 middleware**
 
-middleware 的设计有点特殊，是一个层层包裹的匿名函数，这其实是函数式编程中的柯里化 [curry](https://link.zhihu.com/?target=http%3A//segmentfault.com/a/1190000003733107)，一种使用匿名单参数函数来实现多参数函数的方法。applyMiddleware 会对 logger 这个 middleware 进行层层调用，动态地对 store 和 next 参数赋值。
+middleware 的设计有点特殊，是一个层层包裹的匿名函数，这其实是函数式编程中的**柯里化** [curry](https://link.zhihu.com/?target=http%3A//segmentfault.com/a/1190000003733107)，一种使用匿名单参数函数来实现多参数函数的方法。applyMiddleware 会对 logger 这个 middleware 进行层层调用，动态地对 store 和 next 参数赋值。
 
 柯里化的 middleware 结构好处在于：
 
@@ -62,7 +58,7 @@ const finalCreateStore = compose(
 
 创建一个普通的 store 通过如下方式：
 
-```text
+```js
 let newStore = applyMiddleware(mid1, mid2, mid3, ...)(createStore)(reducer, null);
 ```
 
@@ -167,7 +163,7 @@ applyMiddleware 函数最短但是最 Redux 最精髓的地方，成功的让 Re
 
 上图之前先上一段用来示例的代码（via [中间件的洋葱模型](https://github.com/kenberkeley/redux-simple-tutorial/blob/master/middleware-onion-model.md?1524474265778)），我们会围绕这段代码理解 applyMiddleware 的洋葱模型机制：
 
-```
+```js
 function M1(store) {
   return function(next) {
     return function(action) {
@@ -215,7 +211,6 @@ var store = Redux.createStore(
 );
 
 store.dispatch({ type: 'MIDDLEWARE_TEST' });
-复制代码
 ```
 
 再放上 Redux 的洋葱模型的示意图（via [中间件的洋葱模型](https://github.com/kenberkeley/redux-simple-tutorial/blob/master/middleware-onion-model.md?1524474265778)），以上代码中间件的洋葱模型如下图：
@@ -242,12 +237,9 @@ nextState <————————————— |     G     |  |    |    |
     \---------------/   \----------/
             ↓                ↓
       更新 state 完毕      收尾工作
-复制代码
 ```
 
 我们将每个 middleware 真正带来副作用的部分（在这里副作用是好的，我们需要的就是中间件的副作用），称为M?副作用，它的函数签名是 `(action) => {}`（记住这个名字）。
-
-
 
 ![image](https://user-gold-cdn.xitu.io/2018/4/24/162f63631ad2023b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
@@ -259,7 +251,7 @@ nextState <————————————— |     G     |  |    |    |
 
 那么问题来了，M1 M2 M3的 next 是如何绑定的呢？
 
-答：柯里化绑定，一个中间件完整的函数签名是 `store => next => action {}`，但是最后执行的洋葱模型只剩下了 action，外层的 store 和 next 经过了柯里化绑定了对应的函数，接下来看一下 next 是如何绑定的。
+答：**柯里化绑定**，一个中间件完整的函数签名是 `store => next => action {}`，但是最后执行的洋葱模型只剩下了 action，外层的 store 和 next 经过了柯里化绑定了对应的函数，接下来看一下 next 是如何绑定的。
 
 ```
 const store = createStore(...args)
@@ -270,7 +262,6 @@ const middlewareAPI = {
 }
 chain = middlewares.map(middleware => middleware(middlewareAPI)) // 绑定 {dispatch和getState}
 dispatch = compose(...chain)(store.dispatch) // 绑定 next
-复制代码
 ```
 
 关键点就是两句绑定，先来看第一句
@@ -287,7 +278,6 @@ chain = middlewares.map(middleware => middleware(middlewareAPI)) // 绑定 {disp
 
 ```
 compose(A, B, C)(arg) === A(B(C(arg)))
-复制代码
 ```
 
 这就是 compose 的作用，从右至左依次将右边的返回值作为左边的参数传入，层层包裹起来，在 React 中嵌套 Decorator 就是这么写，比如：
@@ -302,21 +292,18 @@ compose(D1, D2, D3)(Button)
         </D3>
     </D2>
 </D1>
-复制代码
 ```
 
 再说回 Redux
 
 ```
 dispatch = compose(...chain)(store.dispatch) 
-复制代码
 ```
 
 在实例代码中相当于
 
 ```
 dispatch = MC1(MC2(MC3(store.dispatch)))
-复制代码
 ```
 
 MC就是 chain 中的元素，没错，这又是一次柯里化。
@@ -344,7 +331,6 @@ OK，到现在我们已经拿到了想要的 dispatch，返回就可以收工了
       getState: store.getState,
       dispatch: (...args) => dispatch(...args)
     }
-复制代码
 ```
 
 在这里 dispatch 使用匿名函数是为了能在 middleware 中调用 compose 的最新的 dispatch（闭包），必须是匿名函数而不是直接写成 store.dispatch。
@@ -361,7 +347,6 @@ function createThunkMiddleware(extraArgument) {
     return next(action);
   };
 }
-复制代码
 ```
 
 就是拦截函数类型的 action，再能够对函数形式的 action（其实是个 actionCreator）暴露 API 再执行一次，如果这个 actionCreator 是多层函数的嵌套，则必须每次执行 actionCreator 后的 actionCreator 都可以引用最新的 dispatch 才行。如果不写成匿名函数，那这个 actionCreator 又走了没有经过任何中间件修饰的 `store.dispatch`，这显然是不行的。所以要写成匿名函数的闭包引用。
@@ -430,3 +415,4 @@ https://juejin.im/post/6844903457757855757
 https://zhuanlan.zhihu.com/p/20597452
 
 https://juejin.im/book/6844733816460804104/section/6844733816599216141
+

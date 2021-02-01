@@ -634,16 +634,12 @@ function setFirstName(firstName){
 var setLastName = setFirstName("kuitos");
 var name = setLastName("lau");
 
-
-// 乍看之下这段代码没有任何问题，但是世界就是这样，大部分东西都禁不起考究。
 // 调用setFirstName函数时返回一个匿名函数，该匿名函数会持有setFirstName函数作用域的变量对象(里面包含arguments和firstName)，不管匿名函数是否会使用该变量对象里的信息，这个持有逻辑均不会改变。
 // 也就是当setFirstName函数执行完之后其执行环境被销毁，但是他的变量对象会一直保存在内存中不被销毁(因为被匿名函数hold)。同样的，垃圾回收机制会因为变量对象被一直hold而不做回收处理。这个时候内存泄露就发生了。这时候我们需要做手动释放内存的处理。like this:
 setLastName = null;
 // 由于匿名函数的引用被置为null，那么其hold的setFirstName的活动对象就能被安全回收了。
 // 当然，现代浏览器引擎(以V8为首)都会尝试回收闭包所占用的内存，所以这一点我们也不必过多处理。
 ```
-
-ps：最后，关于闭包引起的内存泄露那都是因为浏览器的gc问题(IE8以下为首)导致的，跟js本身没有关系。
 
 ## 关于ES6的块级作用域
 
@@ -661,12 +657,22 @@ let 和 const 定义的变量与 var 不同，它们在编译阶段会放到**�
 
 ```javascript
 executionContext：{
-    variable environment: {
-        variable object：vars,functions,arguments,
-        scope chain: variable object + all parents scopes
+    VariableEnvironment: { //变量环境
+        EnvironmentRecord:{
+             Type: "Object", //全局环境
+            //Type: "Declartive" //函数环境
+          // 标识符绑定在这里  
+        }
+        outer: <##> //对外部环境的引用，可以访问其外部词法环境
     }
-    lexical environment: let,const
-    thisValue: context object
+    LexicalEnvironment: { //词法环境
+    	EnvironmentRecord:{
+            Type: "Object" //或 Declartive
+            //标识符绑定
+        }
+        outer: <null>
+    }
+    ThisBinding: context object
 }
 ```
 
@@ -697,7 +703,7 @@ foo()
 <img src="https://static001.geekbang.org/resource/image/f9/67/f9f67f2f53437218baef9dc724bd4c67.png" alt="img" style="zoom:50%;" />
 
 * 函数内部通过 var 声明的变量，在编译阶段全都被存放到变量环境里面了。
-* 通过 let 声明的变量，在编译阶段会被存放到词法环境（Lexical Environment）中。
+* 通过 let 声明的变量和函数声明，在编译阶段会被存放到词法环境（Lexical Environment）中。
 * 在函数的作用域块内部，通过 let 声明的变量并没有被存放到词法环境中。
 
 **第二步继续执行代码**
@@ -712,7 +718,7 @@ foo()
 
   <img src="https://static001.geekbang.org/resource/image/06/08/06c06a756632acb12aa97b3be57bb908.png" alt="img" style="zoom:50%;" />
 
-* 当作用域块执行结束后，其内部定义的变量就会从词法环境的栈顶唐初，最终的执行上下文如图：
+* 当作用域块执行结束后，其内部定义的变量就会从词法环境的栈顶弹出，最终的执行上下文如图：
 
   <img src="https://static001.geekbang.org/resource/image/d4/28/d4f99640d62feba4202aa072f6369d28.png" alt="img" style="zoom:50%;" />
 

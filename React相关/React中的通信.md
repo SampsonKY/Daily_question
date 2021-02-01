@@ -194,6 +194,10 @@ export default function App() {
   <Consumer>
     {value => <div>{value.title}</div>}
   </Consumer>
+  //或者
+  static contextType = AppContext;
+  let title = this.context;
+  <div>this.</div>
   ```
 
 ### 新旧 Context API

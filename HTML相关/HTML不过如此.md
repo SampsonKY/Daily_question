@@ -60,13 +60,13 @@
   - 他可以容纳内联元素和其他块元素。
 - **内联元素**的特点：
   - 和其他元素都在同一行；
-  - 高，行高及外边距和内边距不可改变；
+  - 行内元素设置width无效，height无效(可以设置line-height)，margin上下无效，padding上下无效
   - 宽度就是它的文字和图片的宽度，不可改变；
   - 内联元素只能容纳文本或者其他内联元素。
-
 - 常见**行内元素**包括：a b span **img** strong sub sup button input label select textarea
 - 常见**块级元素**包括：div ul ol li dl dt dd h1 h2 h3 h4 h5 h6 p
 - **inline-block** 的元素（如input、img)既具有 block 元素可以设置宽高的特性，同时又具有 inline 元素默认不换行的特性。
+- 可以通过`display: block`和`display: inline`相互转换
 
 ### 3. SGML、HTML、XML 和 XHTML 的区别
 
@@ -81,15 +81,10 @@
 
 ### 4. 使用 link 和 @import 导入样式有什么区别？
 
-- 从属关系区别。@import 是CSS 提供的语法规则，只有导入样式表的作用；link
-  是HTML 提供的标签，不仅可以加载CSS 文件，还可以定义RSS、rel 连接属性、引入网
-  站图标等。
-- 加载顺序区别。加载页面时，link 标签引入的CSS 被同时加载；@import 引入
-  的CSS 将在页面加载完毕后被加载。
-- 兼容性区别。@import 是CSS2.1 才有的语法，故只可在IE5+ 才能识别；link 标
-  签作为HTML 元素，不存在兼容性问题。
-- DOM 可控性区别。可以通过JS 操作DOM ，插入link 标签来改变样式；由于
-  DOM 方法是基于文档的，无法使用@import 的方式插入样式。
+- 从属关系区别。@import 是CSS 提供的语法规则，只有导入样式表的作用；link是HTML 提供的标签，不仅可以加载CSS 文件，还可以定义RSS、rel 连接属性、引入网站图标等。
+- 加载顺序区别。加载页面时，link 标签引入的CSS 被同时加载；@import 引入的CSS 将在页面加载完毕后被加载。
+- 兼容性区别。@import 是CSS2.1 才有的语法，故只可在IE5+ 才能识别；link 标签作为HTML 元素，不存在兼容性问题。
+- DOM 可控性区别。可以通过JS 操作DOM ，插入link 标签来改变样式；由于DOM 方法是基于文档的，无法使用@import 的方式插入样式。
 
 ### 5. 对浏览器的理解
 
@@ -160,8 +155,7 @@ html 语义化主要指的是我们应该**使用合适的标签来划分网页�
 
 iframe 元素会创建包含另外一个文档的内联框架（即行内框架）。
 
-- **主要缺点有**
-  iframe 会阻塞主页面的onload 事件。window 的onload 事件需要在所有iframe加载完毕后（包含里面的元素）才会触发。在Safari 和Chrome 里，通过JavaScript 动态设置iframe 的src 可以避免这种阻塞情况。
+- **主要缺点有**iframe 会阻塞主页面的onload 事件。window 的onload 事件需要在所有iframe加载完毕后（包含里面的元素）才会触发。在Safari 和Chrome 里，通过JavaScript 动态设置iframe 的src 可以避免这种阻塞情况。
 - 搜索引擎的检索程序无法解读这种页面，不利于网页的SEO 。
 - iframe 和主页面共享连接池，而浏览器对相同域的连接有限制，所以会影响页面的并行加载。
 - 浏览器的后退按钮失效。
