@@ -87,7 +87,7 @@ Websocket 是 HTML5 规范提出的一个**应用层的全双工协议**，适�
 
 **WebSocket API**
 
-要创建Web Socket，先实例一个WebSocket对象并传入要连接的绝对URL，同源策略对webSocket不适用。
+要创建Web Socket，先实例一个WebSocket对象并传入要连接的绝对URL，**同源策略**对webSocket不适用。
 
 ```
 var socket = new WebSocket("ws://www.example.com/server.php");
@@ -112,11 +112,11 @@ socket.close();
 
 **发送和接收数据**
 
-连接建立后，要向服务器发送数据，使用`send()`方法并传入任意字符串，因为WebSockets只能通过连接发送纯文本数据，所以对于复杂的数据结构，在通过连接发送之前，必须进行序列化。
+连接建立后，要向服务器发送数据，使用`send()`方法并传入任意字符串，因为WebSockets只能通过连接发送**纯文本数据**，所以对于复杂的数据结构，在通过连接发送之前，必须进行**序列化**。
 
 当服务器向客户端发来消息时，WebSocket 对象就会触发 `message` 事件。这个`message` 事件与其他传递消息的协议类似，也是把返回的数据保存在`event.data` 属性中。
 
-```
+```js
 socket.onmessage = function(event){
     var data = event.data;
     //处理数据
